@@ -29,6 +29,12 @@ import java.util.*;
 /** The current implementation is awful. Consider it a proof of concept. */
 @SuppressWarnings("unchecked")
 public class DataPatcher{
+    private static ModMeta dpModMeta = new ModMeta(){{
+        name = internalName = "dp";
+    }};
+
+    public static final LoadedMod dpMod = new LoadedMod(new Fi("dp"), new Fi(""), null, null, dpModMeta);
+
     public static final int maxImageSize = 2000;
     public static final int patchFormatVersion = 2;
 
@@ -37,10 +43,7 @@ public class DataPatcher{
     private static final ObjectMap<String, ContentType> nameToType = new ObjectMap<>();
     private static DataPatcher currentDataPatcher;
     private static ContentParser parser = createParser();
-    private static  ModMeta dpModMeta = new ModMeta(){{
-        name = internalName = "dp";
-    }};
-    private static LoadedMod dpMod = new LoadedMod(new Fi("dp"), new Fi(""), null, null, dpModMeta);
+
 
     private boolean applied;
     private ContentLoader contentLoader;
@@ -48,6 +51,7 @@ public class DataPatcher{
     private Seq<Runnable> resetters = new Seq<>();
     private Seq<Runnable> afterCallbacks = new Seq<>();
     private Seq<Object> visitStack = new Seq<>();
+    private Seq<Content> addedContent = new Seq<>();
     private @Nullable PatchAsset currentlyApplyingPatch;
     private @Nullable ContentAsset currentlyApplyingContent;
     private Seq<LVar> addedVars = new Seq<>();
@@ -196,16 +200,18 @@ public class DataPatcher{
 
             parser.finishParsing();
 
+            addedContent.clear();
+            Seq<Content> all = addedContent;
+
+            for(var arr : Vars.content.getContentMap()){
+                all.addAll(arr.select(c -> c.minfo.mod == dpMod));
+            }
+
             for(var errored : dpMod.erroredContent){
                 if(errored.minfo.error != null && errored.minfo.asset != null){
                     errored.minfo.asset.warnings.add(errored.minfo.error);
                 }
                 Vars.content.remove(errored);
-            }
-
-            Seq<Content> all = new Seq<>();
-            for(var arr : Vars.content.getContentMap()){
-                all.addAll(arr.select(c -> c.minfo.mod == dpMod));
             }
 
             for(var cont : all){
@@ -287,8 +293,13 @@ public class DataPatcher{
         afterCallbacks.each(Runnable::run);
         afterCallbacks.clear();
         usedpatches.clear();
+        addedContent.clear();
 
         if(reloadContentWorld) fixContentArrays();
+    }
+
+    public Seq<Content> getAddedContent(){
+        return addedContent;
     }
 
     void callContentRemove(){
