@@ -100,7 +100,7 @@ public class LStatements{
 
             field(table, input, str -> input = str);
 
-            table.add(token(" to "));
+            table.add(token("to"));
 
             field(table, target, str -> target = str);
 
@@ -414,7 +414,7 @@ public class LStatements{
 
             table.add(" = ");
 
-            table.add(token("link#"));
+            table.add(token("link-"));
 
             field(table, address, str -> address = str);
         }
@@ -445,7 +445,7 @@ public class LStatements{
 
             table.left();
 
-            table.add(token(" set "));
+            table.add(token("set"));
 
             table.button(b -> {
                 b.label(() -> enumText(type));
@@ -455,7 +455,7 @@ public class LStatements{
                 }, 2, cell -> cell.size(100, 50)));
             }, Styles.logict, () -> {}).size(90, 40).color(table.color).left().padLeft(2);
 
-            table.add(token(" of ")).self(this::param);
+            table.add(token("of")).self(this::param);
 
             field(table, target, v -> target = v);
 
@@ -505,7 +505,7 @@ public class LStatements{
                 int fi = i;
                 Prov<RadarTarget> get = () -> (fi == 0 ? target1 : fi == 1 ? target2 : target3);
 
-                table.add(token(i == 0 ? " target " : " and ")).self(this::param);
+                table.add(token(i == 0 ? "target" : "and")).self(this::param);
 
                 table.button(b -> {
                     b.label(() -> enumText(get.get()));
@@ -519,13 +519,13 @@ public class LStatements{
                 }
             }
 
-            table.add(token(" order ")).self(this::param);
+            table.add(token("order")).self(this::param);
 
             fields(table, sortOrder, v -> sortOrder = v);
 
             table.row();
 
-            table.add(token(" sort ")).self(this::param);
+            table.add(token("sort")).self(this::param);
 
             table.button(b -> {
                 b.label(() -> enumText(sort));
@@ -534,7 +534,7 @@ public class LStatements{
                 }, 2, cell -> cell.size(100, 50)));
             }, Styles.logict, () -> {}).size(90, 40).color(table.color).left().padLeft(2);
 
-            table.add(token(" output ")).self(this::param);
+            table.add(token("output")).self(this::param);
 
             fields(table, output, v -> output = v);
         }
@@ -661,7 +661,7 @@ public class LStatements{
                 }));
             }, Styles.logict, () -> {}).size(40f).padLeft(-1).color(table.color);
 
-            table.add(token(" in ")).self(this::param);
+            table.add(token("in")).self(this::param);
 
             field(table, from, str -> from = str);
         }
@@ -817,9 +817,9 @@ public class LStatements{
             table.table(t -> {
                 t.setColor(table.color);
 
-                t.add(token("then "));
+                t.add(token("then"));
                 field(t, a, str -> a = str).width(130f);
-                t.add(token(" else "));
+                t.add(token("else"));
                 field(t, b, str -> b = str).width(130f);
             }).left();
         }
@@ -842,7 +842,7 @@ public class LStatements{
         @Override
         public void build(Table table){
             field(table, value, str -> value = str);
-            table.add(token(" sec"));
+            table.add(token("sec"));
         }
 
         @Override
@@ -883,7 +883,7 @@ public class LStatements{
         public void build(Table table){
             fields(table, result, str -> result = str).width(120f);
 
-            table.add(token(" = lookup"));
+            table.add(token("-lookup"));
 
             row(table);
 
@@ -1001,7 +1001,7 @@ public class LStatements{
 
         @Override
         public void build(Table table){
-            table.add(token("if ")).padLeft(4);
+            table.add(token("if")).padLeft(4);
 
             last = table.color;
             table.table(this::rebuild);
@@ -1038,7 +1038,7 @@ public class LStatements{
             if(op != ConditionOp.always) st.field(t, comp0, set0);
 
             t.button(b -> {
-                b.add(st.selectTranslate(op.symbol));//Cannot make a static reference to the non-static method selectTranslate(String) from the type LStatement
+                b.add(st.selectTranslate(op.symbol));
                 b.clicked(() -> st.showSelect(b, ConditionOp.all, op, getter));
             }, Styles.logict, () -> {
             }).size(op == ConditionOp.always ? 80f : 48f, 40f).pad(4f).color(t.color);
@@ -1078,7 +1078,7 @@ public class LStatements{
 
         @Override
         public void build(Table table){
-            table.add(token(" type "));
+            table.add(token("type"));
 
             TextField field = field(table, type, str -> type = str).get();
 
@@ -1211,7 +1211,7 @@ public class LStatements{
         void rebuild(Table table){
             table.clearChildren();
 
-            table.add(token(" find ")).left().self(this::param);
+            table.add(token("find")).left().self(this::param);
 
             table.button(b -> {
                 b.label(() -> enumText(locate));
@@ -1224,14 +1224,14 @@ public class LStatements{
             switch(locate){
                 case building -> {
                     row(table);
-                    table.add(token(" group ")).left().self(this::param);
+                    table.add(token("group")).left().self(this::param);
                     table.button(b -> {
                         b.label(() -> enumText(flag));
                         b.clicked(() -> showSelect(b, BlockFlag.allLogic, flag, t -> flag = t, 2, cell -> cell.size(110, 50)));
                     }, Styles.logict, () -> {}).size(110, 40).color(table.color).left().padLeft(2);
                     row(table);
 
-                    table.add(token(" enemy ")).left().self(this::param);
+                    table.add(token("enemy")).left().self(this::param);
 
                     fields(table, enemy, str -> enemy = str);
 
@@ -1239,7 +1239,7 @@ public class LStatements{
                 }
 
                 case ore -> {
-                    table.add(token(" ore ")).left().self(this::param);
+                    table.add(token("ore")).left().self(this::param);
                     table.table(ts -> {
                         ts.color.set(table.color);
 
@@ -1276,19 +1276,19 @@ public class LStatements{
                 }
             }
 
-            table.add(token(" outX ")).left().self(this::param);
+            table.add(token("outX")).left().self(this::param);
             fields(table, outX, str -> outX = str);
 
-            table.add(token(" outY ")).left().self(this::param);
+            table.add(token("outY")).left().self(this::param);
             fields(table, outY, str -> outY = str);
 
             row(table);
 
-            table.add(token(" found ")).left().self(this::param);
+            table.add(token("found")).left().self(this::param);
             fields(table, outFound, str -> outFound = str);
 
             if(locate != LLocate.ore){
-                table.add(token(" building ")).left().self(this::param);
+                table.add(token("building")).left().self(this::param);
                 fields(table, outBuild, str -> outBuild = str);
             }
 
@@ -1371,7 +1371,7 @@ public class LStatements{
             fields(table, result, str -> result = str);
 
             table.add(" = ");
-            table.add(token("get "));
+            table.add(token("get"));
 
             row(table);
 
@@ -1380,7 +1380,7 @@ public class LStatements{
                 b.clicked(() -> showSelect(b, TileLayer.all, layer, o -> layer = o));
             }, Styles.logict, () -> {}).size(64f, 40f).pad(4f).color(table.color);
 
-            table.add(token(" at "));
+            table.add(token("at"));
 
             fields(table, x, str -> x = str);
             table.add(", ");
@@ -1427,7 +1427,7 @@ public class LStatements{
 
             row(table);
 
-            table.add(token(" at "));
+            table.add(token("at"));
 
             fields(table, x, str -> x = str);
             table.add(", ");
@@ -1435,17 +1435,17 @@ public class LStatements{
 
             row(table);
 
-            table.add(token(" to "));
+            table.add(token("to"));
 
             fields(table, block, str -> block = str);
 
             if(layer == TileLayer.block){
                 row(table);
 
-                table.add(token("team "));
+                table.add(token("team"));
                 fields(table, team, str -> team = str);
 
-                table.add(token(" rotation "));
+                table.add(token("rotation"));
                 fields(table, rotation, str -> rotation = str);
             }
         }
@@ -1474,12 +1474,12 @@ public class LStatements{
         public void build(Table table){
             fields(table, result, str -> result = str);
 
-            table.add(token(" = spawn"));
+            table.add(token("-spawn"));
             field(table, type, str -> type = str).colspan(!LCanvas.useRows() ? 1 : 2);
 
             row(table);
 
-            table.add(token(" at "));
+            table.add(token("at"));
             fields(table, x, str -> x = str);
 
             table.add(", ");
@@ -1491,10 +1491,10 @@ public class LStatements{
                 table.add();
             }
 
-            table.add(token("team "));
+            table.add(token("team"));
             field(table, team, str -> team = str);
 
-            table.add(token(" rot "));
+            table.add(token("rot"));
             fields(table, rotation, str -> rotation = str).left();
         }
 
@@ -1522,7 +1522,7 @@ public class LStatements{
         public void build(Table table){
             fields(table, result, str -> result = str);
 
-            table.add(token(" = bullet "));
+            table.add(token("-bullet"));
 
             row(table);
 
@@ -1593,7 +1593,7 @@ public class LStatements{
                 }, 2, c -> c.size(120f, 38f)));
             }, Styles.logict, () -> {}).size(120f, 40f).pad(4f).color(table.color);
 
-            table.add(token(clear ? " from " : " to "));
+            table.add(token(clear ? "from" : "to"));
 
             row(table);
 
@@ -1601,11 +1601,11 @@ public class LStatements{
 
             if(!clear && !(content.statusEffect(effect) != null && content.statusEffect(effect).permanent)){
 
-                table.add(token(" for "));
+                table.add(token("for"));
 
                 fields(table, duration, str -> duration = str);
 
-                table.add(token(" sec"));
+                table.add(token("sec"));
             }
         }
 
@@ -1637,7 +1637,7 @@ public class LStatements{
             field(table, to, str -> to = str);
 
             table.add(" = ");
-            table.add(token(" weather "));
+            table.add(token("weather"));
 
             row(table);
 
@@ -1689,7 +1689,7 @@ public class LStatements{
 
         @Override
         public void build(Table table){
-            table.add(token("set "));
+            table.add(token("set"));
             table.add(token("weather"));
 
             tfield = field(table, weather, str -> weather = str).padRight(0f).get();
@@ -1715,7 +1715,7 @@ public class LStatements{
                 }));
             }, Styles.logict, () -> {}).size(40f).padLeft(-1).color(table.color);
 
-            table.add(token(" state "));
+            table.add(token("state"));
 
             fields(table, state, str -> state = str);
         }
@@ -1742,7 +1742,7 @@ public class LStatements{
 
         @Override
         public void build(Table table){
-            table.add(token("natural "));
+            table.add(token("natural"));
             fields(table, natural, str -> natural = str);
 
             table.add("x ").visible(() -> !natural.equals("true"));
@@ -1812,7 +1812,7 @@ public class LStatements{
                     field(table, value, s -> value = s);
                 }
                 case ban, unban -> {
-                    table.add(token(" block/unit "));
+                    table.add(token("block-unit"));
 
                     fields(table, value, s -> value = s);
                 }
@@ -1863,14 +1863,14 @@ public class LStatements{
 
             switch(type){
                 case announce, toast  -> {
-                    table.add(token(" for "));
+                    table.add(token("for"));
                     fields(table, duration, str -> duration = str);
-                    table.add(token(" sec "));
+                    table.add(token("sec"));
                 }
             }
             row(table);
 
-            table.add(token(" success "));
+            table.add(token("success"));
             fields(table, outSuccess, str -> outSuccess = str);
         }
 
@@ -1920,11 +1920,11 @@ public class LStatements{
 
                     row(table);
 
-                    table.add(token(" speed "));
+                    table.add(token("speed"));
                     fields(table, p3, str -> p3 = str);
                 }
                 case zoom -> {
-                    table.add(token(" level "));
+                    table.add(token("level"));
                     fields(table, p1, str -> p1 = str);
                 }
             }
@@ -2455,9 +2455,9 @@ public class LStatements{
         public void build(Table table){
             float width = LCanvas.useRows() ? 100f : 190f;
 
-            fields(table, "music", name, str -> name = str).width(width);
+            fields(table, token("music"), name, str -> name = str).width(width);
 
-            fields(table, "interrupt", interrupt, str -> interrupt = str).width(width);
+            fields(table, token("interrupt"), interrupt, str -> interrupt = str).width(width);
         }
 
         @Override
@@ -2501,7 +2501,7 @@ public class LStatements{
 
             row(table);
 
-            fieldst(table, token("of id#"), id, str -> id = str);
+            fieldst(table, token("of-id-"), id, str -> id = str);
 
             //Q: why don't you just use arrays for this?
             //A: arrays aren't as easy to serialize so the code generator doesn't handle them

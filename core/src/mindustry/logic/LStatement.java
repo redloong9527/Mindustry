@@ -125,12 +125,9 @@ public abstract class LStatement{
         return Core.settings.getBool("logiclocalization", true);
     }
 
-    public static String token(String text){
-        if(text == null) return null;
-        if(!logicLocalization()) return text;
-        String key = text.trim().toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]+", "-");
-        if(key.isEmpty()) return text;
-        return Core.bundle.get("name.token." + key, text);
+    public static String token(String key){
+        if(!logicLocalization()) return key;
+        return Core.bundle.get("name.token." + key, key);
     }
 
     protected String enumText(Enum<?> value){
@@ -145,17 +142,7 @@ public abstract class LStatement{
         if(logicLocalization() && Core.bundle.has(labelKey)){
             return Core.bundle.get(labelKey);
         }
-        StringBuilder formatted = new StringBuilder();
-        for(int i = 0; i < value.name().length(); i++){
-            char c = value.name().charAt(i);
-            if(i > 0 && (Character.isUpperCase(c) || c == '-')){
-                if(c != '-') formatted.append(' ');
-                formatted.append(Character.toLowerCase(c));
-            }else if(c != '-'){
-                formatted.append(Character.toLowerCase(c));
-            }
-        }
-        return formatted.toString();
+        return value.name();
     }
     protected String selectTranslate(String text){
         if(text == null || text.isEmpty() || !logicLocalization()) return text;
@@ -350,7 +337,7 @@ public abstract class LStatement{
 
     public String localizedName(){
         if(!logicLocalization()) return name();
-        return Core.bundle.get("name." + statementKey(), name());
+        return Core.bundle.get("instruction." + statementKey(), name());
     }
 
     public String name(){
