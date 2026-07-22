@@ -121,10 +121,6 @@ public abstract class LStatement{
         return value;
     }
 
-    protected static boolean logicLocalization(){
-        return Core.settings.getBool("logiclocalization", true);
-    }
-
     public static String token(String key){
         if(!logicLocalization()) return key;
         return Core.bundle.get("name.token." + key, key);
