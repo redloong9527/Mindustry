@@ -122,7 +122,6 @@ public abstract class LStatement{
     }
 
     public static String token(String key){
-        if(!logicLocalization()) return key;
         return Core.bundle.get("name.token." + key, key);
     }
 
@@ -135,13 +134,13 @@ public abstract class LStatement{
         
         String name = value.name().toLowerCase(Locale.ROOT);
         String labelKey = value.getClass().getSimpleName().toLowerCase(Locale.ROOT) + ".label." + name;
-        if(logicLocalization() && Core.bundle.has(labelKey)){
+        if(Core.bundle.has(labelKey)){
             return Core.bundle.get(labelKey);
         }
         return value.name();
     }
     protected String selectTranslate(String text){
-        if(text == null || text.isEmpty() || !logicLocalization()) return text;
+        if(text == null || text.isEmpty()) return text;
         switch(text){
             case "not": case "and": case "or": case "b-and": case "xor": case "flip": case "always":
                 return token(text);
@@ -332,7 +331,6 @@ public abstract class LStatement{
     }
 
     public String localizedName(){
-        if(!logicLocalization()) return name();
         return Core.bundle.get("instruction." + statementKey(), name());
     }
 
