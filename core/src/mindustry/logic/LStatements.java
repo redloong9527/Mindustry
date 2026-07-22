@@ -2525,7 +2525,7 @@ public class LStatements{
                             .update(b -> b.getStyle().imageUp = choice.sound != null && choice.sound == lastPreview && choice.sound.countPlaying() > 0 ? Icon.pause : Icon.play)
                             .size(40f).padRight(6f);
 
-                            String label = "all".equals(selectedCategory[0]) ? choice.category + "/" + choice.name : choice.name;
+                            String label = "all".equals(selectedCategory[0]) ? token(choice.category) + "/" + choice.name : choice.name;
                             row.button(label, Styles.logicTogglet, () -> {
                                 id = "@sfx-" + choice.name;
                                 build(table);
@@ -2542,7 +2542,7 @@ public class LStatements{
                     tabs.defaults().size(140f, 34f).left();
 
                     for(String category : categoryNames){
-                        tabs.button(Strings.capitalize(category), Styles.logicTogglet, () -> {
+                        tabs.button(token(category), Styles.logicTogglet, () -> {
                             selectedCategory[0] = category;
                             rebuild.run();
                             //fixes flickering
