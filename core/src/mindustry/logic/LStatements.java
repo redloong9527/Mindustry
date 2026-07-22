@@ -414,7 +414,7 @@ public class LStatements{
 
             table.add(" = ");
 
-            table.add(token("link-"));
+            table.add(token("linknum"));
 
             field(table, address, str -> address = str);
         }
